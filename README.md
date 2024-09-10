@@ -26,6 +26,7 @@ for configure this package go to `config/minicrud.php` and if you want to custom
   
 return [
     'namespace' => 'Laravel',
+    'modules' => 'modules',
 ];
 ```
 
