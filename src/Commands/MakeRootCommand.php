@@ -90,7 +90,7 @@ class MakeRootCommand extends Command
     private function moduleCmd($moduleRepoCommand, $smallLetterPlural)
     {
         $this->call("make:migration", [
-            'name' => "create_" . $smallLetterPlural . "tables",
+            'name' => "create_" . $smallLetterPlural . "_tables",
         ]);
         $this->call("make:module", [
             'name' => $moduleRepoCommand,
