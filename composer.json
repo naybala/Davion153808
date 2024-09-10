@@ -1,0 +1,47 @@
+{
+    "name": "davion153808/mini-crud-generator",
+    "description": "Mini CRUD Generator",
+    "type": "library",
+    "version": "2.0.2",
+    "autoload": {
+        "psr-4": {
+            "Davion153808\\MiniCRUDGenerator\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "naybala",
+            "email": "naybalaismylife.nbl@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0|^8.0.2|^8.1|^8.2",
+        "illuminate/support": "^11.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Davion153808\\MiniCRUDGenerator\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Davion153808\\MiniCRUDGenerator\\MiniCRUDGeneratorServiceProvider"
+            ],
+            "aliases": {
+                "MiniCRUDGenerator": "Davion153808\\MiniCRUDGenerator\\MiniCRUDGeneratorFacade"
+            }
+        }
+    }
+}
