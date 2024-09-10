@@ -1,13 +1,13 @@
 # Quickly Generate Laravel Mini Crud Generator
 
-## :inbox_tray: Installation
+##  Installation
 
 You can install this package via composer:
 
 ```bash
 composer require davion153808/mini-crud-generator:dev-main
 ```
-and after installation add in app.php
+after installation was done. Add in " app.php ":
 
 ``` 
 Davion153808\MiniCRUDGenerator\MiniCRUDGeneratorServiceProvider::class,
@@ -65,6 +65,6 @@ php artisan make:coreFeature--view
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-## Laravel Package Boilerplate
+## Packagist
 
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
+This package was register and publish at ( https://packagist.org/ )
