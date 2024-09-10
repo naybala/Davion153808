@@ -2,4 +2,5 @@
 
 return [
     'namespace' => 'BasicDashboard',
+    'modules' => 'modules',
 ];

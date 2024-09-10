@@ -43,8 +43,8 @@ class MakeRootLogicCommand extends Command
             $this->info("");
             die();
         }
-        $nameSpace = $this->choice('Enter the name space.', ['BasicDashboard'], '0');
-        $module = $this->choice('Enter the name of the root modules.', ['modules'], '0');
+        $nameSpace = config('minicrud.namespace');
+        $module = config('minicrud.modules');
         $this->info("Enter the feature name.It should be plural.");
         $feature = $this->ask('For example (if you implement demo feature the input should be "Demos" )');
         if ($feature != "") {
