@@ -67,6 +67,7 @@ class MakeRootCommand extends Command
     private function allRun($pathName, $logicPath, $nameSpace, $feature, $view)
     {
         $model = ucwords(Pluralizer::singular($feature));
+        $smallLetterPlural = lcfirst($feature);
         $smallLetter = lcfirst($model);
         $moduleRepoCommand = "$pathName~$nameSpace.$feature/$model";
         $controllerCommand = "{$pathName}~{$nameSpace}.{$feature}/{$model}Controller?path={$logicPath}";
@@ -76,18 +77,21 @@ class MakeRootCommand extends Command
 
         switch ($logicPath) {
             case "false":
-                $this->moduleCmd($moduleRepoCommand);
+                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural);
                 $this->repoMessageReval();
                 break;
             default:
-                $this->moduleCmd($moduleRepoCommand);
+                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural);
                 $this->allCmd($controllerCommand, $resourceCommand, $serviceCommand, $requestCommand, $view, $model, $smallLetter, $logicPath);
                 $this->allMessageReval($smallLetter, $model, $logicPath);
         }
     }
 
-    private function moduleCmd($moduleRepoCommand)
+    private function moduleCmd($moduleRepoCommand, $smallLetterPlural)
     {
+        $this->call("make:migration", [
+            'name' => "create_" . $smallLetterPlural . "tables",
+        ]);
         $this->call("make:module", [
             'name' => $moduleRepoCommand,
         ]);
