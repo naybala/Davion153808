@@ -19,17 +19,28 @@ class MiniCRUDGeneratorServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/minicrud.php' => config_path('minicrud.php'),
             ], 'config');
-
-            // Registering package commands.
         }
+        // Registering package commands.
+        $this->commands([
+            Commands\MakeControllerCommand::class,
+            Commands\MakeCustomValidation::class,
+            Commands\MakeCustomViewCommand::class,
+            Commands\MakeLanguageCommand::class,
+            Commands\MakeModuleCommand::class,
+            Commands\MakeRepositoryCommand::class,
+            Commands\MakeResourceCommand::class,
+            Commands\MakeRootCommand::class,
+            Commands\MakeRootLogicCommand::class,
+            Commands\MakeRootViewCommand::class,
+            Commands\MakeServiceCommand::class,
+        ]);
     }
 
     /**
      * Register the application services.
      */
     public function register()
-    {
-        // Automatically apply the package configuration
+    { // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/minicrud.php', 'minicrud');
 
         // Register the main class to use with the facade

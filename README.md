@@ -5,13 +5,18 @@
 You can install this package via composer:
 
 ```bash
-composer require davion153808/mini-crud-generator
+composer require davion153808/mini-crud-generator:dev-main
 ```
-
-and after installation you can run following command to publish config files:
+and after installation add in app.php
 
 ``` 
-php artisan vendor:publish --provider="DAVION153808\MiniCRUDGenerator\MiniCRUDGeneratorServiceProvider" --tag="config"
+Davion153808\MiniCRUDGenerator\MiniCRUDGeneratorServiceProvider::class,
+```
+
+and after you can run following command to publish config files:
+
+``` 
+php artisan vendor:publish --tag=config
 ```
 ## :gear: Configuration
 for configure this package go to `config/minicrud.php` and if you want to customize namespace you can do like this

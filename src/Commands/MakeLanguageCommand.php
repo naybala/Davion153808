@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Davion153808\MiniCRUDGenerator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

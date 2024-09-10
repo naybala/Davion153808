@@ -1,5 +1,5 @@
 <?php
-namespace App\Console\Commands;
+namespace Davion153808\MiniCRUDGenerator\Commands;
 
 class MakeCommonCommand
 {

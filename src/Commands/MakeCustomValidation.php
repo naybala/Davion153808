@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Davion153808\MiniCRUDGenerator\Commands;
 
-use App\Console\Commands\MakeCommonCommand;
+use Davion153808\MiniCRUDGenerator\Commands\MakeCommonCommand;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
