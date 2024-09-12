@@ -33,6 +33,7 @@ class MiniCRUDGeneratorServiceProvider extends ServiceProvider
             Commands\MakeRootLogicCommand::class,
             Commands\MakeRootViewCommand::class,
             Commands\MakeServiceCommand::class,
+            Commands\MakeFeatureTestCommand::class,
         ]);
     }
 
