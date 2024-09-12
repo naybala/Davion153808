@@ -83,6 +83,7 @@ class MakeRootCommand extends Command
             default:
                 $this->moduleCmd($moduleRepoCommand, $smallLetterPlural);
                 $this->allCmd($controllerCommand, $resourceCommand, $serviceCommand, $requestCommand, $view, $model, $smallLetter, $logicPath);
+                $this->featureTestCmd($model, $smallLetter, $feature, $logicPath);
                 $this->allMessageReval($smallLetter, $model, $logicPath);
         }
     }
@@ -123,6 +124,16 @@ class MakeRootCommand extends Command
                 'name' => $smallLetter,
             ]);
         }
+    }
+
+    private function featureTestCmd($model, $smallModel, $pluralModel, $logicPath)
+    {
+        $this->call("make:customFeatureTest", [
+            'model' => $model,
+            'smallModel' => $smallModel,
+            'pluralModel' => $pluralModel,
+            'logicPath' => $logicPath,
+        ]);
     }
 
     private function repoMessageReval()
