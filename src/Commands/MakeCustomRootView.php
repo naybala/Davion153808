@@ -5,7 +5,7 @@ namespace Davion153808\MiniCRUDGenerator\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Pluralizer;
 
-class MakeRootViewCommand extends Command
+class MakeCustomRootView extends Command
 {
     /**
      * The name and signature of the console command.

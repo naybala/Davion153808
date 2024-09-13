@@ -2,12 +2,12 @@
 
 namespace Davion153808\MiniCRUDGenerator\Commands;
 
-use Davion153808\MiniCRUDGenerator\Commands\MakeCommonCommand;
+use Davion153808\MiniCRUDGenerator\Commands\MakeCustomCommon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 
-class MakeServiceCommand extends Command
+class MakeCustomService extends Command
 {
     //get customService.stub
     /**
@@ -46,10 +46,10 @@ class MakeServiceCommand extends Command
 
     public function getStubServiceVariables()
     {
-        $projectName = $this->commonCommand->filterProjectName($this->getSingularClassName($this->argument('name')));
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $serviceName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
+        $projectName = $this->makeCustomCommon->filterProjectName($this->getSingularClassName($this->argument('name')));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $serviceName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
         $service = substr($serviceName, 0, -7);
         $capital = $service;
         $serviceCamel = lcfirst($capital);
@@ -67,7 +67,7 @@ class MakeServiceCommand extends Command
 
     public function getServiceSourceFile()
     {
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
         $result = null;
         switch ($pathName) {
             case "Web":
@@ -96,10 +96,10 @@ class MakeServiceCommand extends Command
 
     public function getServiceFilePath()
     {
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $serviceName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->commonCommand->filterModuleName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $serviceName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
+        $moduleName = $this->makeCustomCommon->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . $pathName . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Services") . DIRECTORY_SEPARATOR . $serviceName . ".php";
     }
 
@@ -108,7 +108,7 @@ class MakeServiceCommand extends Command
 
     public function __construct(
         Filesystem $files,
-        private MakeCommonCommand $commonCommand,
+        private MakeCustomCommon $makeCustomCommon,
     ) {
         parent::__construct();
         $this->files = $files;

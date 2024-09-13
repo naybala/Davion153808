@@ -5,70 +5,80 @@ namespace Davion153808\MiniCRUDGenerator\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
-class MakeLanguageCommand extends Command
+class MakeCustomFeatureTest extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:customLanguage {name} ';
+    protected $signature = 'make:customFeatureTest {model} {pluralModel} {smallModel} {logicPath}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This cmd will make en and mm file for feature template';
+    protected $description = 'This cmd will make feature test';
 
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
-    public function getEnLang()
+    public function getFeatureTest()
     {
-        return __DIR__ . '/stubs/customLanguageEn.stub';
+        return __DIR__ . '/stubs/customFeatureTest.stub';
     }
 
-    public function getMmLang()
+    public function getSeeder()
     {
-        return __DIR__ . '/stubs/customLanguageMm.stub';
+        return __DIR__ . '/stubs/customSeeder.stub';
     }
 
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
-    public function getLanguageVariables()
+    public function getFeatureTestVariables()
     {
         return [
-            'FILENAME' => $this->argument('name'),
+            'MODEL' => $this->argument('model'),
+            'SMALL_MODEL' => $this->argument('smallModel'),
+            'PLURAL_MODEL' => $this->argument('pluralModel'),
+        ];
+    }
+
+    public function getSeederVariables()
+    {
+        return [
+            'MODEL' => $this->argument('model'),
+            'PLURAL_MODEL' => lcfirst($this->argument('pluralModel')),
         ];
     }
 
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
-    public function getLanguageEnSourceFile()
+    public function getFeatureTestSourceFile()
     {
-        return $this->getStubLangEnContents($this->getEnLang(), $this->getLanguageVariables());
+        return $this->getStubFeatureTestContents($this->getFeatureTest(), $this->getFeatureTestVariables());
     }
 
-    public function getLanguageMmSourceFile()
+    public function getSeederSourceFile()
     {
-        return $this->getStubLangMmContents($this->getMmLang(), $this->getLanguageVariables());
-    }
-
-    ///////////////////////////////This is Method Divider///////////////////////////////////////////
-
-    public function getLangEnFilePath(): string
-    {
-        return base_path("lang" . DIRECTORY_SEPARATOR . "en" . DIRECTORY_SEPARATOR . ($this->argument('name') . ".php"));
-    }
-
-    public function getLangMmFilePath(): string
-    {
-        return base_path("lang" . DIRECTORY_SEPARATOR . "mm" . DIRECTORY_SEPARATOR . ($this->argument('name') . ".php"));
+        return $this->getStubSeederContents($this->getSeeder(), $this->getSeederVariables());
     }
 
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
-    public function getStubLangEnContents($stub, $stubVariables = [])
+    public function getFeatureTestFilePath(): string
+    {
+        return base_path("tests" . DIRECTORY_SEPARATOR . "Feature" . DIRECTORY_SEPARATOR . ($this->argument('model') . "FeatureTest.php"));
+    }
+
+    public function getSeederFilePath(): string
+    {
+        return base_path("database" . DIRECTORY_SEPARATOR . "seeders" . DIRECTORY_SEPARATOR . ($this->argument('model') . "Seeder.php"));
+    }
+
+    ///////////////////////////////This is Method Divider///////////////////////////////////////////
+
+    public function getStubFeatureTestContents($stub, $stubVariables = [])
     {
         $contents = file_get_contents($stub);
         foreach ($stubVariables as $search => $replace) {
@@ -77,7 +87,7 @@ class MakeLanguageCommand extends Command
         return $contents;
     }
 
-    public function getStubLangMmContents($stub, $stubVariables = [])
+    public function getStubSeederContents($stub, $stubVariables = [])
     {
         $contents = file_get_contents($stub);
         foreach ($stubVariables as $search => $replace) {
@@ -92,7 +102,7 @@ class MakeLanguageCommand extends Command
 
     public function __construct(
         Filesystem $files,
-        private MakeCommonCommand $commonCommand,
+        private MakeCustomCommon $makeCustomCommon,
     ) {
         parent::__construct();
         $this->files = $files;
@@ -115,24 +125,20 @@ class MakeLanguageCommand extends Command
      */
     public function handle()
     {
-        $smallLetter = $this->argument('name');
-        $capitalLetter = ucfirst($this->argument('name'));
-        $path = $this->getLangEnFilePath();
+        $path = $this->getFeatureTestFilePath();
         $this->makeDirectory(dirname($path));
-        $contents = $this->getLanguageEnSourceFile();
+        $contents = $this->getFeatureTestSourceFile();
 
-        $pathTwo = $this->getLangMmFilePath();
-        $this->makeDirectory(dirname($path));
-        $contentTwo = $this->getLanguageMmSourceFile();
+        $pathTwo = $this->getSeederFilePath();
+        $this->makeDirectory(dirname($pathTwo));
+        $contentTwo = $this->getSeederSourceFile();
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contents);
             $this->files->put($pathTwo, $contentTwo);
             $this->info("File : {$path} created");
-            $this->info("File : {$pathTwo} created");
         } else {
             $this->info("File : {$path} already exits");
-            $this->info("File : {$pathTwo} already exits");
         }
     }
 }

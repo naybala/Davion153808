@@ -2,12 +2,12 @@
 
 namespace Davion153808\MiniCRUDGenerator\Commands;
 
-use Davion153808\MiniCRUDGenerator\Commands\MakeCommonCommand;
+use Davion153808\MiniCRUDGenerator\Commands\MakeCustomCommon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 
-class MakeCustomViewCommand extends Command
+class MakeCustomView extends Command
 {
     protected $signature = 'make:customView {name} {model}';
 
@@ -112,29 +112,29 @@ class MakeCustomViewCommand extends Command
 
     public function getStoreViewFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->argument('name'));
-        $subFolderName = $this->commonCommand->filterSubFolderName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->argument('name'));
+        $subFolderName = $this->makeCustomCommon->filterSubFolderName($this->argument('name'));
         return base_path("resources" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . $subFolderName) . DIRECTORY_SEPARATOR . "create.blade.php";
     }
 
     public function getEditViewFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->argument('name'));
-        $subFolderName = $this->commonCommand->filterSubFolderName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->argument('name'));
+        $subFolderName = $this->makeCustomCommon->filterSubFolderName($this->argument('name'));
         return base_path("resources" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . $subFolderName) . DIRECTORY_SEPARATOR . "edit.blade.php";
     }
 
     public function getIndexViewFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->argument('name'));
-        $subFolderName = $this->commonCommand->filterSubFolderName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->argument('name'));
+        $subFolderName = $this->makeCustomCommon->filterSubFolderName($this->argument('name'));
         return base_path("resources" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . $subFolderName) . DIRECTORY_SEPARATOR . "index.blade.php";
     }
 
     public function getShowViewFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->argument('name'));
-        $subFolderName = $this->commonCommand->filterSubFolderName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->argument('name'));
+        $subFolderName = $this->makeCustomCommon->filterSubFolderName($this->argument('name'));
         return base_path("resources" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . $subFolderName) . DIRECTORY_SEPARATOR . "show.blade.php";
     }
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
@@ -182,7 +182,7 @@ class MakeCustomViewCommand extends Command
 
     public function __construct(
         Filesystem $files,
-        private MakeCommonCommand $commonCommand,
+        private MakeCustomCommon $makeCustomCommon,
     ) {
         parent::__construct();
         $this->files = $files;

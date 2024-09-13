@@ -1,7 +1,7 @@
 <?php
 namespace Davion153808\MiniCRUDGenerator\Commands;
 
-class MakeCommonCommand
+class MakeCustomCommon
 {
     public function filterProjectName($names)
     {

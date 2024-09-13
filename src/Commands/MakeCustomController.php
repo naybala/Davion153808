@@ -2,12 +2,12 @@
 
 namespace Davion153808\MiniCRUDGenerator\Commands;
 
-use Davion153808\MiniCRUDGenerator\Commands\MakeCommonCommand;
+use Davion153808\MiniCRUDGenerator\Commands\MakeCustomCommon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 
-class MakeControllerCommand extends Command
+class MakeCustomController extends Command
 {
     /**
      * The name and signature of the console command.
@@ -45,10 +45,10 @@ class MakeControllerCommand extends Command
 
     public function getStubControllerVariables()
     {
-        $projectName = $this->commonCommand->filterProjectName($this->getSingularClassName($this->argument('name')));
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $controllerName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
+        $projectName = $this->makeCustomCommon->filterProjectName($this->getSingularClassName($this->argument('name')));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $controllerName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
         $controller = substr($controllerName, 0, -10);
         $capital = $controller;
         $controller = lcfirst($capital);
@@ -65,7 +65,7 @@ class MakeControllerCommand extends Command
 
     public function getControllerSourceFile()
     {
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
         $result = null;
         switch ($pathName) {
             case "Web":
@@ -94,10 +94,10 @@ class MakeControllerCommand extends Command
 
     public function getControllerFilePath()
     {
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $controllerName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->commonCommand->filterModuleName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $controllerName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
+        $moduleName = $this->makeCustomCommon->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . $pathName . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Controllers") . DIRECTORY_SEPARATOR . $controllerName . ".php";
     }
 
@@ -106,7 +106,7 @@ class MakeControllerCommand extends Command
 
     public function __construct(
         Filesystem $files,
-        private MakeCommonCommand $commonCommand,
+        private MakeCustomCommon $makeCustomCommon,
     ) {
         parent::__construct();
         $this->files = $files;

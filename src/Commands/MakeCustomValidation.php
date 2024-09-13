@@ -2,7 +2,7 @@
 
 namespace Davion153808\MiniCRUDGenerator\Commands;
 
-use Davion153808\MiniCRUDGenerator\Commands\MakeCommonCommand;
+use Davion153808\MiniCRUDGenerator\Commands\MakeCustomCommon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
@@ -49,10 +49,10 @@ class MakeCustomValidation extends Command
 
     public function getStubStoreRequestVariables()
     {
-        $projectName = $this->commonCommand->filterProjectName($this->getSingularClassName($this->argument('name')));
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $requestName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
+        $projectName = $this->makeCustomCommon->filterProjectName($this->getSingularClassName($this->argument('name')));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $requestName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
         $storeUpdateRequest = substr($requestName, 0, -7);
         return [
             'NAMESPACE' => "$projectName\\$pathName\\$folderName\\Validation",
@@ -112,28 +112,28 @@ class MakeCustomValidation extends Command
 
     public function getStoreRequestFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $requestName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->commonCommand->filterModuleName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $requestName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
+        $moduleName = $this->makeCustomCommon->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . $pathName . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Validation") . DIRECTORY_SEPARATOR . "Store" . $requestName . ".php";
     }
 
     public function getUpdateRequestFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $requestName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->commonCommand->filterModuleName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $requestName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
+        $moduleName = $this->makeCustomCommon->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . $pathName . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Validation") . DIRECTORY_SEPARATOR . "Update" . $requestName . ".php";
     }
 
     public function getDeleteRequestFilePath(): string
     {
-        $folderName = $this->commonCommand->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $requestName = $this->commonCommand->filterMainName($this->getSingularClassName($this->argument('name')));
-        $pathName = $this->commonCommand->filterApiName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->commonCommand->filterModuleName($this->argument('name'));
+        $folderName = $this->makeCustomCommon->filterFolderName($this->getSingularClassName($this->argument('name')));
+        $requestName = $this->makeCustomCommon->filterMainName($this->getSingularClassName($this->argument('name')));
+        $pathName = $this->makeCustomCommon->filterApiName($this->getSingularClassName($this->argument('name')));
+        $moduleName = $this->makeCustomCommon->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . $pathName . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Validation") . DIRECTORY_SEPARATOR . "Delete" . $requestName . ".php";
     }
 
@@ -144,7 +144,7 @@ class MakeCustomValidation extends Command
 
     public function __construct(
         Filesystem $files,
-        private MakeCommonCommand $commonCommand,
+        private MakeCustomCommon $makeCustomCommon,
     ) {
         parent::__construct();
         $this->files = $files;

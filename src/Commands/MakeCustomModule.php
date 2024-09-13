@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 
-class MakeModuleCommand extends Command
+class MakeCustomModule extends Command
 {
     ////////////////////////////////////////////////////////////////////////////
     /**
