@@ -19,9 +19,9 @@ class $MODEL$FeatureTest extends TestCase
         $$SMALL_MODEL$ = $MODEL$::first()->toArray();;
         $$SMALL_MODEL$List = $this->get(self::ROUTE);
         $$SMALL_MODEL$Create = $this->post(self::ROUTE);
-        $$SMALL_MODEL$Update = $this->put(self::ROUTE . "/" . $$SMALL_MODEL$->id);
-        $$SMALL_MODEL$Edit = $this->get(self::ROUTE . "/" . $$SMALL_MODEL$->id . "/edit");
-        $$SMALL_MODEL$Delete = $this->delete(self::ROUTE . "/" . $$SMALL_MODEL$->id);
+        $$SMALL_MODEL$Update = $this->put(self::ROUTE . "/" . $$SMALL_MODEL$['id']);
+        $$SMALL_MODEL$Edit = $this->get(self::ROUTE . "/" . $$SMALL_MODEL$['id'] . "/edit");
+        $$SMALL_MODEL$Delete = $this->delete(self::ROUTE . "/" . $$SMALL_MODEL$['id']);
 
         $$SMALL_MODEL$List->assertStatus(302);
         $$SMALL_MODEL$Create->assertStatus(302);
