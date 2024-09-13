@@ -15,7 +15,7 @@ class $MODEL$Seeder extends Seeder
     public function run()
     {
         $data = $this->prepareData();
-        DB::table($PLURAL_MODEL$)->insert($data);
+        DB::table("$PLURAL_MODEL$")->insert($data);
     }
     
     private function prepareData()
