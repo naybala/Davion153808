@@ -28,6 +28,11 @@ class MakeFeatureTestCommand extends Command
         return __DIR__ . '/stubs/customFeatureTest.stub';
     }
 
+    public function getSeeder()
+    {
+        return __DIR__ . '/stubs/customSeeder.stub';
+    }
+
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
     public function getFeatureTestVariables()
@@ -39,11 +44,24 @@ class MakeFeatureTestCommand extends Command
         ];
     }
 
+    public function getSeederVariables()
+    {
+        return [
+            'MODEL' => $this->argument('model'),
+            'PLURAL_MODEL' => lcfirst($this->argument('pluralModel')),
+        ];
+    }
+
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
     public function getFeatureTestSourceFile()
     {
         return $this->getStubFeatureTestContents($this->getFeatureTest(), $this->getFeatureTestVariables());
+    }
+
+    public function getSeederSourceFile()
+    {
+        return $this->getStubSeederContents($this->getSeeder(), $this->getSeederVariables());
     }
 
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
@@ -53,9 +71,23 @@ class MakeFeatureTestCommand extends Command
         return base_path("tests" . DIRECTORY_SEPARATOR . "Feature" . DIRECTORY_SEPARATOR . ($this->argument('model') . "FeatureTest.php"));
     }
 
+    public function getSeederFilePath(): string
+    {
+        return base_path("database" . DIRECTORY_SEPARATOR . "seeders" . DIRECTORY_SEPARATOR . ($this->argument('model') . "Seeder.php"));
+    }
+
     ///////////////////////////////This is Method Divider///////////////////////////////////////////
 
     public function getStubFeatureTestContents($stub, $stubVariables = [])
+    {
+        $contents = file_get_contents($stub);
+        foreach ($stubVariables as $search => $replace) {
+            $contents = str_replace('$' . $search . '$', $replace, $contents);
+        }
+        return $contents;
+    }
+
+    public function getStubSeederContents($stub, $stubVariables = [])
     {
         $contents = file_get_contents($stub);
         foreach ($stubVariables as $search => $replace) {
@@ -97,8 +129,13 @@ class MakeFeatureTestCommand extends Command
         $this->makeDirectory(dirname($path));
         $contents = $this->getFeatureTestSourceFile();
 
+        $pathTwo = $this->getSeederFilePath();
+        $this->makeDirectory(dirname($pathTwo));
+        $contentTwo = $this->getSeederSourceFile();
+
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contents);
+            $this->files->put($pathTwo, $contentTwo);
             $this->info("File : {$path} created");
         } else {
             $this->info("File : {$path} already exits");
