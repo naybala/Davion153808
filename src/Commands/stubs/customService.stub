@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use $PROJECT_NAME$\Foundations\Domain\$FOLDER_NAME$\Repositories\Eloquent\$CAPITAL$Repository;
+use $PROJECT_NAME$\Foundations\Domain\$FOLDER_NAME$\Repositories\$CAPITAL$RepositoryInterface;
 use $PROJECT_NAME$\$PATH_NAME$\Common\BaseController;
 use $PROJECT_NAME$\$PATH_NAME$\$FOLDER_NAME$\Resources\$CAPITAL$Resource;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +26,7 @@ class $CLASS_NAME$ extends BaseController
     const LANG_PATH = "$CAMEL_CASE$.$CAMEL_CASE$";
 
     public function __construct(
-        private $CAPITAL$Repository $$CAMEL_CASE$Repository,
+        private $CAPITAL$RepositoryInterface $$CAMEL_CASE$RepositoryInterface,
     )
     {
     }
@@ -35,7 +35,7 @@ class $CLASS_NAME$ extends BaseController
 
     public function index(array $request): View
     {
-        $$CAMEL_CASE$List = $this->$CAMEL_CASE$Repository->get$CAPITAL$List($request);
+        $$CAMEL_CASE$List = $this->$CAMEL_CASE$RepositoryInterface->get$CAPITAL$List($request);
         $$CAMEL_CASE$List = $CAPITAL$Resource::collection($$CAMEL_CASE$List)->response()->getData(true);
         return $this->returnView(self::VIEW.".index", $$CAMEL_CASE$List, $request);
     }
@@ -52,12 +52,12 @@ class $CLASS_NAME$ extends BaseController
     public function store($request): RedirectResponse
     {
         try {
-            $this->$CAMEL_CASE$Repository->beginTransaction();
-            $this->$CAMEL_CASE$Repository->insert($request);
-            $this->$CAMEL_CASE$Repository->commit();
+            $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
+            $this->$CAMEL_CASE$RepositoryInterface->insert($request);
+            $this->$CAMEL_CASE$RepositoryInterface->commit();
             return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_created'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$Repository, $e);
+            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
         }
     }
 
@@ -65,7 +65,7 @@ class $CLASS_NAME$ extends BaseController
 
     public function edit(string $id): View | RedirectResponse
     {
-        $$CAMEL_CASE$ = $this->$CAMEL_CASE$Repository->edit($id);
+        $$CAMEL_CASE$ = $this->$CAMEL_CASE$RepositoryInterface->edit($id);
         $$CAMEL_CASE$ = new $CAPITAL$Resource($$CAMEL_CASE$);
         $$CAMEL_CASE$ = $$CAMEL_CASE$->response()->getData(true)['data'];
         return $this->returnView(self::VIEW . ".edit", $$CAMEL_CASE$);
@@ -75,7 +75,7 @@ class $CLASS_NAME$ extends BaseController
 
     public function show(string $id): View | RedirectResponse
     {
-        $$CAMEL_CASE$ = $this->$CAMEL_CASE$Repository->show($id);
+        $$CAMEL_CASE$ = $this->$CAMEL_CASE$RepositoryInterface->show($id);
         $$CAMEL_CASE$ = new $CAPITAL$Resource($$CAMEL_CASE$);
         $$CAMEL_CASE$ = $$CAMEL_CASE$->response()->getData(true)['data'];
         return $this->returnView(self::VIEW . '.show', $$CAMEL_CASE$);
@@ -86,12 +86,12 @@ class $CLASS_NAME$ extends BaseController
     public function update($request, string $id): RedirectResponse
     {
          try {
-            $this->$CAMEL_CASE$Repository->beginTransaction();
-            $this->$CAMEL_CASE$Repository->update($request, $id);
-            $this->$CAMEL_CASE$Repository->commit();
+            $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
+            $this->$CAMEL_CASE$RepositoryInterface->update($request, $id);
+            $this->$CAMEL_CASE$RepositoryInterface->commit();
             return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_updated'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$Repository, $e);
+            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
         }
     }
 
@@ -100,12 +100,12 @@ class $CLASS_NAME$ extends BaseController
     public function destroy($request): RedirectResponse
     {
          try {
-            $this->$CAMEL_CASE$Repository->beginTransaction();
-            $this->$CAMEL_CASE$Repository->delete($request['id']);
-            $this->$CAMEL_CASE$Repository->commit();
+            $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
+            $this->$CAMEL_CASE$RepositoryInterface->delete($request['id']);
+            $this->$CAMEL_CASE$RepositoryInterface->commit();
             return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_deleted'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$Repository, $e);
+            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
         }
     }
 
