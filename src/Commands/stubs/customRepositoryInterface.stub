@@ -1,6 +1,10 @@
 <?php
 namespace $NAMESPACE$;
 
+use BasicDashboard\Foundations\Domain\Base\Repositories\BaseRepositoryInterface;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 /**
  *
  * A $CLASS_NAME$RepositoryInterface is declaration of methods inside of Repository.
@@ -11,7 +15,8 @@ namespace $NAMESPACE$;
  *
  */
 
-interface $CLASS_NAME$RepositoryInterface
+interface $CLASS_NAME$RepositoryInterface extends BaseRepositoryInterface
 {
-
+    public function filter$CLASS_NAME$(array $params): Builder;
+    public function get$CLASS_NAME$List($params): LengthAwarePaginator;
 }

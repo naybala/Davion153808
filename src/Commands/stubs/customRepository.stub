@@ -25,7 +25,7 @@ class $CLASS_NAME$Repository extends BaseRepository implements $CLASS_NAME$Repos
         parent::__construct($model);
     }
 
-    protected function filter$CLASS_NAME$(array $params): Builder | $CLASS_NAME$
+    public function filter$CLASS_NAME$(array $params): Builder
     {
         $connection = $this->connection();
         if (isset($params['keyword']) && strlen($params['keyword']) > 0) {

@@ -215,7 +215,7 @@ class MakeCustomModule extends Command
     {
         if (!$this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
-            $this->files->makeDirectory($path . DIRECTORY_SEPARATOR . "Providers", 0777, true, true);
+            // $this->files->makeDirectory($path . DIRECTORY_SEPARATOR . "Providers", 0777, true, true);
             $this->files->makeDirectory($path . DIRECTORY_SEPARATOR . "Repositories", 0777, true, true);
         }
         return $path;
@@ -226,21 +226,21 @@ class MakeCustomModule extends Command
     public function handle()
     {
         $path = $this->getSourceFilePath();
-        $providerPath = $this->getProviderFilePath();
+        // $providerPath = $this->getProviderFilePath();
         $repositoryInterface = $this->getRepositoryInterfaceFilePath();
 
         $this->makeDirectory(dirname($path));
         $contents = $this->getSourceFile();
 
-        $this->makeDirectory(dirname($providerPath));
-        $providerContents = $this->getProviderSourceFile();
+        // $this->makeDirectory(dirname($providerPath));
+        // $providerContents = $this->getProviderSourceFile();
 
         $this->makeDirectory(dirname($repositoryInterface));
         $repositoryInterfaceContents = $this->getRepositoryInterfaceSourceFile();
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contents);
-            $this->files->put($providerPath, $providerContents);
+            // $this->files->put($providerPath, $providerContents);
             $this->files->put($repositoryInterface, $repositoryInterfaceContents);
             $this->info("File : {$path} created");
         } else {
