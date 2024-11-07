@@ -151,16 +151,23 @@ class MakeCustomRoot extends Command
             $this->info("");
             $this->info(" please continue the below direction for fully mini crud feature");
             $this->info(" ");
-            $this->info("===============================First Step==========================================");
+            $this->info("===============================Language Step==========================================");
             $this->info("The first step.You need to add in lang/both(en and mm)/sidebar.php.The string is '" . $smallLetter . "' => '" . $model . "'");
             $this->info(" ");
-            $this->info("===============================Second Step==========================================");
+            $this->info("===============================Blade View Step==========================================");
             $this->info("The second step.You need to add some code in resources/views/components/sidebar.blade.php");
             $this->info(" ");
-            $this->info("===============================Third Step==========================================");
+            $this->info("===============================Route Step==========================================");
             $this->info("The third step.You need to add some code in routes/web.php The code is ---- Route::resource('" . $smallLetter . "s' ," . $model . "Controller::class);");
+            $this->info(" ");
+            $this->info("===============================Permission Step==========================================");
+            $this->info("The fourth step.You need to add '$smallLetter' in permissions array in config/numbers.php and run [ php artisan migrate:fresh, php artisan db:seed ]. [Hint.You can check in PermissionSeeder]");
+            $this->info(" ");
+            $this->info("===============================Service Container Binding Step==========================================");
+            $this->info("The fifth step.You need to add " . '$this->app->bind(' . $model . 'RepositoryInterface::class,' . $model . 'Repository::class);  in the register method and import necessary interface and repository class in app/provider/RepositoryBindingProvider' );
+            $this->info(" ");
+            $this->info("===============================Reminder: Artisan is always at your service. It can boost your development speed, but it won't heal a broken heart. ==========================================");
         }
-
     }
 
 }

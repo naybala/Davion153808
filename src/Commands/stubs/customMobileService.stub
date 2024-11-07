@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use $PROJECT_NAME$\Foundations\Domain\$FOLDER_NAME$\Repositories\Eloquent\$CAPITAL$Repository;
+use $PROJECT_NAME$\Foundations\Domain\$FOLDER_NAME$\Repositories\$CAPITAL$Repository;
 use $PROJECT_NAME$\$PATH_NAME$\Common\BaseMobileController;
 use $PROJECT_NAME$\$PATH_NAME$\$FOLDER_NAME$\Resources\$CAPITAL$Resource;
 use Exception;
@@ -22,7 +22,7 @@ class $CLASS_NAME$ extends BaseMobileController
 {
 
     public function __construct(
-        private $CAPITAL$Repository $$CAMEL_CASE$Repository,
+        private $CAPITAL$RepositoryInterface $$CAMEL_CASE$RepositoryInterface,
     )
     {
     }
@@ -31,7 +31,7 @@ class $CLASS_NAME$ extends BaseMobileController
 
     public function index(array $request): JsonResponse
     {
-        $data = $this->$CAMEL_CASE$Repository->get$CAPITAL$List($request);
+        $data = $this->$CAMEL_CASE$RepositoryInterface->get$CAPITAL$List($request);
         $data = $CAPITAL$Resource::collection($data)->response()->getData(true);
         return $this->sendResponse("Index success", $data);
     }
@@ -40,7 +40,7 @@ class $CLASS_NAME$ extends BaseMobileController
 
     public function show(string $id): JsonResponse
     {
-        $data = $this->$CAMEL_CASE$Repository->edit($id);
+        $data = $this->$CAMEL_CASE$RepositoryInterface->edit($id);
         $data= new $CAPITAL$Resource($data);
         $data= $data->response()->getData(true)['data'];
         return $this->sendResponse('Show success',$data);
