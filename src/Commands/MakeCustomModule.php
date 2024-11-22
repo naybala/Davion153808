@@ -115,8 +115,10 @@ class MakeCustomModule extends Command
         $folderName = $this->filterFolderName($this->getSingularClassName($this->argument('name')));
         $modelName = $this->filterModelName($this->getSingularClassName($this->argument('name')));
         return [
+            'PROJECT_NAME' => "$projectName",
             'NAMESPACE' => "$projectName\\Foundations\\Domain\\$folderName\\Repositories",
             'CLASS_NAME' => $modelName,
+            'PlURAl_CLASS_NAME' => Pluralizer::plural($modelName),
         ];
     }
 
@@ -133,11 +135,6 @@ class MakeCustomModule extends Command
         return $this->getStubContents($this->getStubPath(), $this->getStubVariables());
     }
 
-    public function getProviderSourceFile()
-    {
-        return $this->getStubProviderContents($this->getProviderPath(), $this->getStubProviderVariables());
-    }
-
     public function getRepositoryInterfaceSourceFile()
     {
         return $this->getStubRepositoryInterfaceContents($this->getRepositoryInterfacePath(), $this->getStubRepositoryInterfaceVariables());
@@ -146,15 +143,6 @@ class MakeCustomModule extends Command
     /////////////////////////////////////////////////////////////
     //get ALl Content form Stub
     public function getStubContents($stub, $stubVariables = [])
-    {
-        $contents = file_get_contents($stub);
-        foreach ($stubVariables as $search => $replace) {
-            $contents = str_replace('$' . $search . '$', $replace, $contents);
-        }
-        return $contents;
-    }
-
-    public function getStubProviderContents($stub, $stubVariables = [])
     {
         $contents = file_get_contents($stub);
         foreach ($stubVariables as $search => $replace) {
@@ -182,14 +170,6 @@ class MakeCustomModule extends Command
         $modelName = $this->filterModelName($this->getSingularClassName($this->argument('name')));
         $moduleName = $this->filterModuleName($this->argument('name'));
         return base_path($moduleName . DIRECTORY_SEPARATOR . "Foundations" . DIRECTORY_SEPARATOR . "Domain" . DIRECTORY_SEPARATOR . $folderName) . DIRECTORY_SEPARATOR . $modelName . '.php';
-    }
-
-    public function getProviderFilePath()
-    {
-        $folderName = $this->filterFolderName($this->getSingularClassName($this->argument('name')));
-        $modelName = $this->filterModelName($this->getSingularClassName($this->argument('name')));
-        $moduleName = $this->filterModuleName($this->argument('name'));
-        return base_path($moduleName . DIRECTORY_SEPARATOR . "Foundations" . DIRECTORY_SEPARATOR . "Domain" . DIRECTORY_SEPARATOR . $folderName . DIRECTORY_SEPARATOR . "Providers") . DIRECTORY_SEPARATOR . "Bind" . $modelName . "Provider.php";
     }
 
     public function getRepositoryInterfaceFilePath()
@@ -226,14 +206,10 @@ class MakeCustomModule extends Command
     public function handle()
     {
         $path = $this->getSourceFilePath();
-        // $providerPath = $this->getProviderFilePath();
         $repositoryInterface = $this->getRepositoryInterfaceFilePath();
 
         $this->makeDirectory(dirname($path));
         $contents = $this->getSourceFile();
-
-        // $this->makeDirectory(dirname($providerPath));
-        // $providerContents = $this->getProviderSourceFile();
 
         $this->makeDirectory(dirname($repositoryInterface));
         $repositoryInterfaceContents = $this->getRepositoryInterfaceSourceFile();

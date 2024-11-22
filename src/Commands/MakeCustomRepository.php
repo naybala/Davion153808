@@ -79,6 +79,7 @@ class MakeCustomRepository extends Command
             'CLASS_NAME' => $modelName,
             'PROJECT_NAME' => $projectName,
             'FOLDER_NAME' => $folderName,
+            'PlURAl_CLASS_NAME' => Pluralizer::plural($modelName),
         ];
     }
 
