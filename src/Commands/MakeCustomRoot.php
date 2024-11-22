@@ -54,8 +54,11 @@ class MakeCustomRoot extends Command
             if ($logic != 'false' && $logic == 'Web') {
                 $view = $this->ask("Enter the view path(UI directory resources/views/??)['admin/user']");
             }
-            $logic != "false" ? $this->allRun($module, $logic, $nameSpace, $feature, $view) :
-            $this->allRun($module, false, $nameSpace, $feature, $view);
+            $migrationAndSeeder = $this->confirm('Do you wish to create migration and seeder?');
+            $logic != "false" ?
+            $this->allRun($module, $logic, $nameSpace, $feature, $view, $migrationAndSeeder)
+            :
+            $this->allRun($module, false, $nameSpace, $feature, $view, $migrationAndSeeder);
         } else {
             $this->info("");
             $this->info("========================= Sorry you can't use repo features (developed by  Davion)==========================");
@@ -64,7 +67,7 @@ class MakeCustomRoot extends Command
 
     }
 
-    private function allRun($pathName, $logicPath, $nameSpace, $feature, $view)
+    private function allRun($pathName, $logicPath, $nameSpace, $feature, $view, $migrationAndSeeder)
     {
         $model = ucwords(Pluralizer::singular($feature));
         $smallLetterPlural = lcfirst($feature);
@@ -76,23 +79,25 @@ class MakeCustomRoot extends Command
         $requestCommand = "{$pathName}~{$nameSpace}.{$feature}/{$model}Request?path={$logicPath}";
 
         switch ($logicPath) {
-            case "false":
-                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural);
+            case "false" :
+                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural, $migrationAndSeeder);
                 $this->repoMessageReval();
                 break;
             default:
-                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural);
+                $this->moduleCmd($moduleRepoCommand, $smallLetterPlural, $migrationAndSeeder);
                 $this->allCmd($controllerCommand, $resourceCommand, $serviceCommand, $requestCommand, $view, $model, $smallLetter, $logicPath);
                 $this->featureTestCmd($model, $smallLetter, $feature, $logicPath);
                 $this->allMessageReval($smallLetter, $model, $logicPath);
         }
     }
 
-    private function moduleCmd($moduleRepoCommand, $smallLetterPlural)
+    private function moduleCmd($moduleRepoCommand, $smallLetterPlural, $migrationAndSeeder)
     {
-        $this->call("make:migration", [
-            'name' => "create_" . $smallLetterPlural . "_table",
-        ]);
+        if ($migrationAndSeeder) {
+            $this->call("make:migration", [
+                'name' => "create_" . $smallLetterPlural . "_table",
+            ]);
+        }
         $this->call("make:module", [
             'name' => $moduleRepoCommand,
         ]);
@@ -164,7 +169,7 @@ class MakeCustomRoot extends Command
             $this->info("The fourth step.You need to add '$smallLetter' in permissions array in config/numbers.php and run [ php artisan migrate:fresh, php artisan db:seed ]. [Hint.You can check in PermissionSeeder]");
             $this->info(" ");
             $this->info("===============================Service Container Binding Step==========================================");
-            $this->info("The fifth step.You need to add " . '$this->app->bind(' . $model . 'RepositoryInterface::class,' . $model . 'Repository::class);  in the register method and import necessary interface and repository class in app/provider/RepositoryBindingProvider' );
+            $this->info("The fifth step.You need to add " . '$this->app->bind(' . $model . 'RepositoryInterface::class,' . $model . 'Repository::class);  in the register method and import necessary interface and repository class in app/provider/RepositoryBindingProvider');
             $this->info(" ");
             $this->info("===============================Reminder: Artisan is always at your service. It can boost your development speed, but it won't heal a broken heart. ==========================================");
         }

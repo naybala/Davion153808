@@ -135,10 +135,16 @@ class MakeCustomFeatureTest extends Command
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contents);
-            $this->files->put($pathTwo, $contentTwo);
             $this->info("File : {$path} created");
         } else {
             $this->info("File : {$path} already exits");
+        }
+
+        if(!$this->files->exists($pathTwo)){
+            $this->files->put($pathTwo, $contentTwo);
+            $this->info("File : {$pathTwo} created");
+        }else {
+            $this->info("File : {$pathTwo} already exits");
         }
     }
 }
