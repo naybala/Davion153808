@@ -28,54 +28,39 @@ class $CLASS_NAME$ extends BaseController
     ) {
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
-
     public function index(Request $request): View
     {
         return $this->$CAMEL_CASE$Service->index($request->all());
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function create(): View
     {
         return $this->$CAMEL_CASE$Service->create();
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
-
     public function store(Store$CAPITAL$Request $request): RedirectResponse
     {
         return $this->$CAMEL_CASE$Service->store($request->validated());
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function edit(string $id): View | RedirectResponse
     {
         return $this->$CAMEL_CASE$Service->edit($id);
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
-
     public function show(string $id): View | RedirectResponse
     {
         return $this->$CAMEL_CASE$Service->show($id);
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function update(Update$CAPITAL$Request $request, string $id): RedirectResponse
     {
         return $this->$CAMEL_CASE$Service->update($request->validated(), $id);
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
-
     public function destroy(Delete$CAPITAL$Request $request): RedirectResponse
     {
         return $this->$CAMEL_CASE$Service->destroy($request->validated());
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 }
