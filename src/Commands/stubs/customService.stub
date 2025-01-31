@@ -6,6 +6,7 @@ use $PROJECT_NAME$\Foundations\Domain\$FOLDER_NAME$\Repositories\$CAPITAL$Reposi
 use $PROJECT_NAME$\$PATH_NAME$\Common\BaseController;
 use $PROJECT_NAME$\$PATH_NAME$\$FOLDER_NAME$\Resources\$CAPITAL$Resource;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\ResponseFactory;
 use Illuminate\View\View;
 use Exception;
 
@@ -27,27 +28,22 @@ class $CLASS_NAME$ extends BaseController
 
     public function __construct(
         private $CAPITAL$RepositoryInterface $$CAMEL_CASE$RepositoryInterface,
+        private ResponseFactory $responseFactory
     )
     {
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function index(array $request): View
     {
         $$CAMEL_CASE$List = $this->$CAMEL_CASE$RepositoryInterface->get$CAPITAL$List($request);
         $$CAMEL_CASE$List = $CAPITAL$Resource::collection($$CAMEL_CASE$List)->response()->getData(true);
-        return $this->returnView(self::VIEW.".index", $$CAMEL_CASE$List, $request);
+        return $this->responseFactory->successView(self::VIEW.".index", $$CAMEL_CASE$List);
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function create(): View
     {
         return view(self::VIEW.'.create');
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function store($request): RedirectResponse
     {
@@ -55,33 +51,27 @@ class $CLASS_NAME$ extends BaseController
             $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
             $this->$CAMEL_CASE$RepositoryInterface->insert($request);
             $this->$CAMEL_CASE$RepositoryInterface->commit();
-            return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_created'));
+            return $this->responseFactory->successIndexRedirect(self::ROUTE, __(self::LANG_PATH . '_created'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
+            return $this->responseFactory->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e->getMessage());
         }
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function edit(string $id): View | RedirectResponse
     {
         $$CAMEL_CASE$ = $this->$CAMEL_CASE$RepositoryInterface->edit($id);
         $$CAMEL_CASE$ = new $CAPITAL$Resource($$CAMEL_CASE$);
         $$CAMEL_CASE$ = $$CAMEL_CASE$->response()->getData(true)['data'];
-        return $this->returnView(self::VIEW . ".edit", $$CAMEL_CASE$);
+        return $this->responseFactory->successView(self::VIEW . ".edit", $$CAMEL_CASE$);
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function show(string $id): View | RedirectResponse
     {
         $$CAMEL_CASE$ = $this->$CAMEL_CASE$RepositoryInterface->show($id);
         $$CAMEL_CASE$ = new $CAPITAL$Resource($$CAMEL_CASE$);
         $$CAMEL_CASE$ = $$CAMEL_CASE$->response()->getData(true)['data'];
-        return $this->returnView(self::VIEW . '.show', $$CAMEL_CASE$);
+        return $this->responseFactory->successView(self::VIEW . '.show', $$CAMEL_CASE$);
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function update($request, string $id): RedirectResponse
     {
@@ -89,13 +79,11 @@ class $CLASS_NAME$ extends BaseController
             $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
             $this->$CAMEL_CASE$RepositoryInterface->update($request, $id);
             $this->$CAMEL_CASE$RepositoryInterface->commit();
-            return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_updated'));
+            return $this->responseFactory->successShowRedirect(self::ROUTE, $id, __(self::LANG_PATH . '_updated'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
+            return $this->responseFactory->redirectBackWithError($this->userRepositoryInterface, $e->getMessage());
         }
     }
-
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 
     public function destroy($request): RedirectResponse
     {
@@ -103,11 +91,10 @@ class $CLASS_NAME$ extends BaseController
             $this->$CAMEL_CASE$RepositoryInterface->beginTransaction();
             $this->$CAMEL_CASE$RepositoryInterface->delete($request['id']);
             $this->$CAMEL_CASE$RepositoryInterface->commit();
-            return $this->redirectRoute(self::ROUTE . ".index", __(self::LANG_PATH . '_deleted'));
+            return $this->responseFactory->successIndexRedirect(self::ROUTE, __(self::LANG_PATH . '_deleted'));
         } catch (Exception $e) {
-            return $this->redirectBackWithError($this->$CAMEL_CASE$RepositoryInterface, $e);
+            return $this->responseFactory->redirectBackWithError($this->userRepositoryInterface, $e->getMessage());
         }
     }
 
-    ///////////////////////////This is Method Divider///////////////////////////////////////
 }

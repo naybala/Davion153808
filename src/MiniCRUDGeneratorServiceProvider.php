@@ -34,6 +34,7 @@ class MiniCRUDGeneratorServiceProvider extends ServiceProvider
             Commands\MakeCustomRootView::class,
             Commands\MakeCustomService::class,
             Commands\MakeCustomFeatureTest::class,
+            Commands\AddFieldsToView::class,
         ]);
     }
 
